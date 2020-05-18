@@ -1,4 +1,4 @@
-# Go Errors
+# JSON Errors for Go
 
 [![GoDoc](https://godoc.org/github.com/erdaltsksn/jerr?status.svg)](https://godoc.org/github.com/erdaltsksn/jerr)
 ![Go](https://github.com/erdaltsksn/jerr/workflows/Go/badge.svg)
