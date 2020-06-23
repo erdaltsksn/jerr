@@ -71,12 +71,12 @@ go get -u github.com/erdaltsksn/jerr
 
 ```go
 // Simple error.
-errSimple := errors.New("Error Message")
+errSimple := jerr.New("Error Message")
 
 // An error that wraps another error.
 err := SomeFunc()
 if err != nil {
-    fmt.Print(errors.Wrap(err, "Message about error"))
+    fmt.Print(jerr.Wrap(err, "Message about error"))
 }
 ```
 
