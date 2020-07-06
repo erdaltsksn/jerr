@@ -63,8 +63,8 @@ The following is the list of supported scopes:
 - **(*)** Multiple scopes or Unknown.
 - **(devops)** e.g. git, travis, pre-commit, netlify, heroku, npm, gulp and etc.
 - **(readme)** e.g. readme, contributing, changelog, license and etc.
-- **(errors)** for Errors
-- **(escape)** for Json Escape
+- **(errors)**
+- **(escape)**
 
 ### Revert and Merge
 

@@ -61,7 +61,7 @@ Check out [examples](examples/simple) directory for more.
 go get github.com/erdaltsksn/jerr
 ```
 
-## Updating
+## Updating / Upgrading
 
 ```sh
 go get -u github.com/erdaltsksn/jerr
