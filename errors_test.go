@@ -8,123 +8,127 @@ import (
 )
 
 func TestNew(t *testing.T) {
-	tests := []struct {
-		name    string
+	type args struct {
 		message string
-		output  string
+	}
+	tests := []struct {
+		name string
+		args args
+		want string
 	}{
 		{`empty`,
-			"",
+			args{message: ""},
 			"{}",
 		},
 		{`simple`,
-			"Hello World",
+			args{message: "Hello World"},
 			`{"message":"Hello World"}`,
 		},
 		{`i18n`,
-			"ı ğ ü ş i ö ç ä I Ğ Ü Ş İ Ö Ç â ê Ä η ή ί ώ w Ω Ә",
+			args{message: "ı ğ ü ş i ö ç ä I Ğ Ü Ş İ Ö Ç â ê Ä η ή ί ώ w Ω Ә"},
 			`{"message":"ı ğ ü ş i ö ç ä I Ğ Ü Ş İ Ö Ç â ê Ä η ή ί ώ w Ω Ә"}`,
 		},
 		{`html`,
-			`<p class='title'>Paragraph<hr /></p>`,
+			args{message: `<p class='title'>Paragraph<hr /></p>`},
 			`{"message":"<p class='title'>Paragraph<hr /></p>"}`,
 		},
 		{`html with double quote`,
-			`<div class="title"></div>`,
+			args{message: `<div class="title"></div>`},
 			`{"message":"<div class=\"title\"></div>"}`,
 		},
 		{`newline`,
 			// DO NOT remove the new line in this string literal
-			`New
-Line`,
+			args{message: `New
+Line`},
 			`{"message":"New\nLine"}`,
 		},
 		{`newline with \n`,
-			`New\nLine`,
+			args{message: `New\nLine`},
 			`{"message":"New\nLine"}`,
 		},
 		{`tab`,
-			`json	error`,
+			args{message: `json	error`},
 			`{"message":"json\terror"}`,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := jerr.New(tt.message).Error()
-			want := tt.output
+			got := jerr.New(tt.args.message).Error()
 
-			if got != want {
-				t.Error("Got:", got, ",", "Want:", want)
+			if got != tt.want {
+				t.Error("Got:", got, "Want:", tt.want)
 			}
 		})
 	}
 }
 
 func TestWrap(t *testing.T) {
-	tests := []struct {
-		name    string
+	type args struct {
 		message string
 		wrapped error
-		output  string
+	}
+	tests := []struct {
+		name string
+		args args
+		want string
 	}{
 		{`empty`,
-			"", errors.New("Hello from wrapped"),
+			args{message: "", wrapped: errors.New("Hello from wrapped")},
 			`{"message":"Hello from wrapped"}`,
 		},
 		{`simple`,
-			"Failed", errors.New("You have entered a wrong number"),
+			args{message: "Failed", wrapped: errors.New("You have entered a wrong number")},
 			`{"message":"Failed","details":"You have entered a wrong number"}`,
 		},
 		{`i18n`,
-			"ı ğ ü ş i ö ç ä I Ğ Ü Ş İ Ö Ç â ê Ä η ή ί ώ w Ω Ә", errors.New("abc"),
+			args{message: "ı ğ ü ş i ö ç ä I Ğ Ü Ş İ Ö Ç â ê Ä η ή ί ώ w Ω Ә", wrapped: errors.New("abc")},
 			`{"message":"ı ğ ü ş i ö ç ä I Ğ Ü Ş İ Ö Ç â ê Ä η ή ί ώ w Ω Ә","details":"abc"}`,
 		},
 		{`html`,
-			`<p class='title'>Paragraph<hr /></p>`, errors.New("abc"),
+			args{message: `<p class='title'>Paragraph<hr /></p>`, wrapped: errors.New("abc")},
 			`{"message":"<p class='title'>Paragraph<hr /></p>","details":"abc"}`,
 		},
 		{`html with double quote`,
-			`<div class="title"></div>`, errors.New("abc"),
+			args{message: `<div class="title"></div>`, wrapped: errors.New("abc")},
 			`{"message":"<div class=\"title\"></div>","details":"abc"}`,
 		},
 		{`newline`,
 			// DO NOT remove the new line in this string literal
-			`New
-Line`, errors.New("abc"),
+			args{message: `New
+Line`, wrapped: errors.New("abc")},
 			`{"message":"New\nLine","details":"abc"}`,
 		},
 		{`newline with \n`,
-			`New\nLine`, errors.New("abc"),
+			args{message: `New\nLine`, wrapped: errors.New("abc")},
 			`{"message":"New\nLine","details":"abc"}`,
 		},
 		{`tab`,
-			`json	error`, errors.New("abc"),
+			args{message: `json	error`, wrapped: errors.New("abc")},
 			`{"message":"json\terror","details":"abc"}`,
 		},
 		{`empty with a jerr.New() error`,
-			"", jerr.New("Hello from jerr.New()"),
+			args{message: "", wrapped: jerr.New("Hello from jerr.New()")},
 			`{"message":"Hello from jerr.New()"}`,
 		},
 		{`simple with a jerr.New() error`,
-			"Failed", jerr.New("Hello from jerr.New()"),
+			args{message: "Failed", wrapped: jerr.New("Hello from jerr.New()")},
 			`{"message":"Failed","details":{"message":"Hello from jerr.New()"}}`,
 		},
 		{`empty with a jerr.Wrap() error`,
-			"", jerr.Wrap(errors.New("from wrap()'s details"), "Hello from jerr.Wrap()"),
+			args{message: "", wrapped: jerr.Wrap(errors.New("from wrap()'s details"), "Hello from jerr.Wrap()")},
 			`{"message":"Hello from jerr.Wrap()","details":"from wrap()'s details"}`,
 		},
 		{`simple with a jerr.Wrap() error`,
-			"Failed", jerr.Wrap(errors.New("Something is wrong"), "Check the details, please"),
+			args{message: "Failed", wrapped: jerr.Wrap(errors.New("Something is wrong"), "Check the details, please")},
 			`{"message":"Failed","details":{"message":"Check the details, please","details":"Something is wrong"}}`,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := jerr.Wrap(tt.wrapped, tt.message).Error()
-			want := tt.output
+			got := jerr.Wrap(tt.args.wrapped, tt.args.message).Error()
 
-			if got != want {
-				t.Error("Got:", got, ",", "Want:", want)
+			if got != tt.want {
+				t.Error("Got:", got, "Want:", tt.want)
 			}
 		})
 	}

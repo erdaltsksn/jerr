@@ -3,24 +3,26 @@ package jerr
 import "testing"
 
 func Test_escapeJSON(t *testing.T) {
+	type args struct {
+		input string
+	}
 	tests := []struct {
-		name   string
-		input  string
-		output string
+		name string
+		args args
+		want string
 	}{
-		{"backslash", "\"", "\\\""},
-		{"new line in Windows", "\r\n", "\\n"},
-		{"new line in Mac OS before X", "\r", "\\n"},
-		{"new line in Unix/macOS", "\n", "\\n"},
-		{"tab", "\t", "\\t"},
+		{"backslash", args{input: "\""}, "\\\""},
+		{"new line in Windows", args{input: "\r\n"}, "\\n"},
+		{"new line in Mac OS before X", args{input: "\r"}, "\\n"},
+		{"new line in Unix/macOS", args{input: "\n"}, "\\n"},
+		{"tab", args{input: "\t"}, "\\t"},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := escapeJSON(tt.input)
-			want := tt.output
+			got := escapeJSON(tt.args.input)
 
-			if got != want {
-				t.Error("Got:", got, ",", "Want:", want)
+			if got != tt.want {
+				t.Error("Got:", got, "Want:", tt.want)
 			}
 		})
 	}
