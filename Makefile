@@ -32,7 +32,7 @@ docs: ## Start local docs server
 	@godoc -http=:6060
 
 .PHONY: build
-build: ## Build gh-label app
+build: ## Build the app
 	go build -v ./...
 
 .PHONY: clean
