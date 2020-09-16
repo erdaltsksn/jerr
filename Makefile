@@ -24,8 +24,8 @@ run: ## Run all examples
 test: ## Run all test
 	go test -v ./...
 
-.PHONY: docs
-docs: ## Start local docs server
+.PHONY: godoc
+godoc: ## Start local docs server
 	@echo "See Documentation:"
 	@echo "\thttp://localhost:6060/pkg/github.com/erdaltsksn/jerr"
 	@echo "\n"
