@@ -24,6 +24,12 @@ run: ## Run all examples
 test: ## Run all test
 	go test -v ./...
 
+.PHONY: coverage
+coverage: ## Show test coverage
+	@go test -coverprofile=coverage.out ./... > /dev/null
+	go tool cover -func=coverage.out
+	rm coverage.out
+
 .PHONY: godoc
 godoc: ## Start local docs server
 	@echo "See Documentation:"
