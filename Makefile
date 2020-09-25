@@ -13,7 +13,9 @@ fmt: ## Run all formatings
 .PHONY: run
 run: ## Run all examples
 	go run ./examples/simple/main.go
-	@echo "\nVisit http://localhost:8080"
+	@echo ""
+	@echo "go run ./examples/http/main.go"
+	@echo "👟Server ready at http://localhost:8080"
 	@go run ./examples/http/main.go
 
 .PHONY: test
@@ -24,15 +26,16 @@ test: ## Run all test
 coverage: ## Show test coverage
 	@go test -coverprofile=coverage.out ./... > /dev/null
 	go tool cover -func=coverage.out
-	rm coverage.out
+	@rm coverage.out
 
 .PHONY: godoc
 godoc: ## Start local docs server
 	@echo "See Documentation:"
-	@echo "\thttp://localhost:6060/pkg/github.com/erdaltsksn/jerr"
-	@echo "\n"
+	@echo "    http://localhost:6060/pkg/github.com/erdaltsksn/jerr"
+	@echo ""
 	@godoc -http=:6060
 
 .PHONY: clean
 clean: ## Clean all generated files
 	rm -rf ./vendor/
+	rm -rf go.sum
