@@ -3,6 +3,7 @@
 [![PkgGoDev](https://pkg.go.dev/badge/github.com/erdaltsksn/jerr)](https://pkg.go.dev/github.com/erdaltsksn/jerr)
 ![Go](https://github.com/erdaltsksn/jerr/workflows/Go/badge.svg)
 [![Go Report Card](https://goreportcard.com/badge/github.com/erdaltsksn/jerr)](https://goreportcard.com/report/github.com/erdaltsksn/jerr)
+![CodeQL](https://github.com/erdaltsksn/jerr/workflows/CodeQL/badge.svg)
 
 `jerr` provides a simple error handling for your rest applications.
 
