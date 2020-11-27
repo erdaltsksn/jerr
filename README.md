@@ -1,7 +1,7 @@
 # JSON Errors for Go
 
 [![PkgGoDev](https://pkg.go.dev/badge/github.com/erdaltsksn/jerr)](https://pkg.go.dev/github.com/erdaltsksn/jerr)
-![Go](https://github.com/erdaltsksn/jerr/workflows/Go/badge.svg)
+![Go](https://github.com/erdaltsksn/jerr/workflows/Go%20(build)/badge.svg)
 [![Go Report Card](https://goreportcard.com/badge/github.com/erdaltsksn/jerr)](https://goreportcard.com/report/github.com/erdaltsksn/jerr)
 ![CodeQL](https://github.com/erdaltsksn/jerr/workflows/CodeQL/badge.svg)
 
@@ -54,8 +54,6 @@ go run main.go
 {"message":"Message about error","details":{"message":"nope"}}
 ```
 
-Check out [examples](examples/simple) directory for more.
-
 ## Installation
 
 ```sh
@@ -81,12 +79,7 @@ if err != nil {
 }
 ```
 
-## Getting Help
-
-```sh
-# Show available `make` commands.
-make help
-```
+Check out [examples](examples) directory for more.
 
 ## Contributing
 

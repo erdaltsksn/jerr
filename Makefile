@@ -19,8 +19,8 @@ run: ## Run all examples
 	@go run ./examples/http/main.go
 
 .PHONY: test
-test: ## Run all test
-	go test -v ./...
+test: ## Run all tests
+	go test ./...
 
 .PHONY: coverage
 coverage: ## Show test coverage
@@ -29,7 +29,7 @@ coverage: ## Show test coverage
 	@rm coverage.out
 
 .PHONY: godoc
-godoc: ## Start local docs server
+godoc: ## Start local godoc server
 	@echo "See Documentation:"
 	@echo "    http://localhost:6060/pkg/github.com/erdaltsksn/jerr"
 	@echo ""
