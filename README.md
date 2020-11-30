@@ -13,6 +13,10 @@
 - Error wrapping
 - JSON escaping
 
+## Requirements
+
+- [Go](https://golang.org)
+
 ## Getting Started
 
 ```sh
