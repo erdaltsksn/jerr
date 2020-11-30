@@ -4,19 +4,17 @@
 help: ## Show this help
 	@egrep -h '\s##\s' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
+.PHONY: clean
+clean: ## Clean all generated files
+	go clean
+	rm -rf ./vendor/
+	rm -rf ./go.sum
+
 .PHONY: fmt
 fmt: ## Run all formatings
 	go mod vendor
 	go mod tidy
 	go fmt ./...
-
-.PHONY: run
-run: ## Run all examples
-	go run ./examples/simple/main.go
-	@echo ""
-	@echo "go run ./examples/http/main.go"
-	@echo "👟Server ready at http://localhost:8080"
-	@go run ./examples/http/main.go
 
 .PHONY: test
 test: ## Run all tests
@@ -28,7 +26,11 @@ coverage: ## Show test coverage
 	go tool cover -func=coverage.out
 	@rm coverage.out
 
-.PHONY: clean
-clean: ## Clean all generated files
-	rm -rf ./vendor/
-	rm -rf ./go.sum
+.PHONY: run
+run: ## Run all examples
+	go run ./examples/simple/main.go
+	@echo ""
+	@echo "go run ./examples/http/main.go"
+	@echo "👟Server ready at http://localhost:8080"
+	@go run ./examples/http/main.go
+	@echo ""
